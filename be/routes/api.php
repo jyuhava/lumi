@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CalculationHistoryController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmployeeController;
@@ -48,4 +49,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // Stock transactions
     Route::get('/stock-summary', [StockTransactionController::class, 'stockSummary']);
     Route::apiResource('stock-transactions', StockTransactionController::class)->only(['index', 'store', 'show']);
+    
+    // Calculation History
+    Route::get('/calculation-history', [CalculationHistoryController::class, 'index']);
+    Route::post('/calculation-history', [CalculationHistoryController::class, 'store']);
+    Route::get('/calculation-history/{id}', [CalculationHistoryController::class, 'show']);
+    Route::delete('/calculation-history/{id}', [CalculationHistoryController::class, 'destroy']);
+    Route::delete('/calculation-history', [CalculationHistoryController::class, 'destroyAll']);
 });
