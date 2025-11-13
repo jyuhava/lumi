@@ -1,17 +1,21 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-    <div class="max-w-md w-full">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- Decorative Background Elements -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-indigo-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-pink-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+    
+    <div class="max-w-md w-full relative z-10">
       <!-- Logo/Header -->
       <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 rounded-2xl mb-4">
-          <ion-icon name="cube-outline" class="text-white text-4xl"></ion-icon>
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl mb-4 shadow-2xl transform hover:scale-110 transition-transform">
+          <ion-icon name="medical" class="text-white text-5xl"></ion-icon>
         </div>
-        <h1 class="text-3xl font-bold text-gray-900">Stok Opname</h1>
-        <p class="text-gray-600 mt-2">Masuk ke akun Anda</p>
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Stok Opname</h1>
+        <p class="text-gray-700 mt-2 font-medium">Sistem Manajemen Rumah Sakit</p>
       </div>
 
       <!-- Login Card -->
-      <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/50">
         <form @submit.prevent="handleLogin">
           <!-- Username -->
           <div class="mb-6">
@@ -27,7 +31,7 @@
                 v-model="username"
                 type="text"
                 required
-                class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                class="block w-full pl-10 pr-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white/50 backdrop-blur-sm hover:border-indigo-300"
                 placeholder="Masukkan username"
               />
             </div>
@@ -47,7 +51,7 @@
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
                 required
-                class="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                class="block w-full pl-10 pr-10 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all bg-white/50 backdrop-blur-sm hover:border-indigo-300"
                 placeholder="Masukkan password"
               />
               <button
@@ -73,7 +77,7 @@
           <button
             type="submit"
             :disabled="loading"
-            class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            class="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-3 px-4 rounded-xl font-bold hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
           >
             <span v-if="!loading">Masuk</span>
             <span v-else class="flex items-center">
@@ -88,8 +92,8 @@
       </div>
 
       <!-- Footer -->
-      <p class="text-center text-sm text-gray-600 mt-6">
-        © 2025 Sistem Stok Opname
+      <p class="text-center text-sm text-gray-700 mt-8 font-medium">
+        © 2025 Sistem Stok Opname Rumah Sakit
       </p>
     </div>
   </div>

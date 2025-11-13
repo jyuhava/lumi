@@ -98,6 +98,66 @@ const router = createRouter({
       component: () => import('../views/SettingsView.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/calculator',
+      name: 'calculator',
+      component: () => import('../views/CalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/nutrition',
+      name: 'calculator-nutrition',
+      component: () => import('../views/NutritionCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/nutritional-status',
+      name: 'calculator-nutritional-status',
+      component: () => import('../views/NutritionalStatusView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/ibw',
+      name: 'calculator-ibw',
+      component: () => import('../views/IBWCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/child-nutrition',
+      name: 'calculator-child-nutrition',
+      component: () => import('../views/ChildNutritionView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/fluid',
+      name: 'calculator-fluid',
+      component: () => import('../views/FluidCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/malnutrition',
+      name: 'calculator-malnutrition',
+      component: () => import('../views/MalnutritionCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/diabetes-diet',
+      name: 'calculator-diabetes-diet',
+      component: () => import('../views/DiabetesDietCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/hypertension-diet',
+      name: 'calculator-hypertension-diet',
+      component: () => import('../views/HypertensionDietCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/history',
+      name: 'calculator-history',
+      component: () => import('../views/CalculationHistoryView.vue'),
+      meta: { requiresAuth: true }
+    },
   ],
 })
 

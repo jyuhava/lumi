@@ -12,71 +12,73 @@
 
     <!-- Stats Cards -->
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 transform hover:scale-105 group">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Total Produk</p>
-            <p class="text-2xl font-bold text-gray-900">{{ stats.totals.products }}</p>
+            <p class="text-sm text-indigo-100 mb-1 font-medium">Total Produk</p>
+            <p class="text-3xl font-bold text-white">{{ stats.totals.products }}</p>
           </div>
-          <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-            <ion-icon name="cube-outline" class="text-2xl text-indigo-600"></ion-icon>
+          <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center ring-2 ring-white/30 group-hover:scale-110 transition-transform">
+            <ion-icon name="cube-outline" class="text-3xl text-white"></ion-icon>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 transform hover:scale-105 group">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Total Kategori</p>
-            <p class="text-2xl font-bold text-gray-900">{{ stats.totals.categories }}</p>
+            <p class="text-sm text-emerald-100 mb-1 font-medium">Total Kategori</p>
+            <p class="text-3xl font-bold text-white">{{ stats.totals.categories }}</p>
           </div>
-          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-            <ion-icon name="grid-outline" class="text-2xl text-green-600"></ion-icon>
+          <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center ring-2 ring-white/30 group-hover:scale-110 transition-transform">
+            <ion-icon name="grid-outline" class="text-3xl text-white"></ion-icon>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 transform hover:scale-105 group">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Total Supplier</p>
-            <p class="text-2xl font-bold text-gray-900">{{ stats.totals.suppliers }}</p>
+            <p class="text-sm text-cyan-100 mb-1 font-medium">Total Supplier</p>
+            <p class="text-3xl font-bold text-white">{{ stats.totals.suppliers }}</p>
           </div>
-          <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-            <ion-icon name="people-outline" class="text-2xl text-blue-600"></ion-icon>
+          <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center ring-2 ring-white/30 group-hover:scale-110 transition-transform">
+            <ion-icon name="people-outline" class="text-3xl text-white"></ion-icon>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 transform hover:scale-105 group">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Nilai Stok</p>
-            <p class="text-xl font-bold text-gray-900">Rp {{ formatPrice(stats.totals.stock_value) }}</p>
+            <p class="text-sm text-amber-100 mb-1 font-medium">Nilai Stok</p>
+            <p class="text-2xl font-bold text-white">Rp {{ formatPrice(stats.totals.stock_value) }}</p>
           </div>
-          <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-            <ion-icon name="cash-outline" class="text-2xl text-yellow-600"></ion-icon>
+          <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center ring-2 ring-white/30 group-hover:scale-110 transition-transform">
+            <ion-icon name="cash-outline" class="text-3xl text-white"></ion-icon>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Alert for Low Stock -->
-    <div v-if="!loading && stats.totals.low_stock > 0" class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
+    <div v-if="!loading && stats.totals.low_stock > 0" class="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-500 rounded-xl p-4 mb-6 shadow-md">
       <div class="flex items-center">
-        <ion-icon name="warning-outline" class="text-2xl text-yellow-600 mr-3"></ion-icon>
+        <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center mr-3 animate-pulse">
+          <ion-icon name="warning" class="text-2xl text-white"></ion-icon>
+        </div>
         <div>
-          <p class="font-semibold text-yellow-800">Peringatan Stok Rendah</p>
-          <p class="text-sm text-yellow-700">Ada {{ stats.totals.low_stock }} produk dengan stok ≤ 10</p>
+          <p class="font-bold text-yellow-900">Peringatan Stok Rendah</p>
+          <p class="text-sm text-yellow-800">Ada {{ stats.totals.low_stock }} produk dengan stok ≤ 10</p>
         </div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Recent Transactions -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100">
-          <h3 class="text-lg font-semibold text-gray-900">Transaksi Terbaru</h3>
+      <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-purple-50">
+          <h3 class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Transaksi Terbaru</h3>
         </div>
         <div class="p-6">
           <div v-if="stats.recent_transactions.length === 0" class="text-center py-8 text-gray-500">
@@ -91,16 +93,12 @@
               <div class="flex items-center space-x-3">
                 <div 
                   :class="[
-                    'w-10 h-10 rounded-lg flex items-center justify-center',
-                    transaction.type === 'in' ? 'bg-green-100' : 'bg-red-100'
-                  ]"
-                >
+                    'w-12 h-12 rounded-xl flex items-center justify-center shadow-md',
+                    transaction.type === 'in' ? 'bg-gradient-to-br from-emerald-400 to-green-500' : 'bg-gradient-to-br from-red-400 to-pink-500'
+                  ]">
                   <ion-icon 
                     :name="transaction.type === 'in' ? 'arrow-down' : 'arrow-up'" 
-                    :class="[
-                      'text-xl',
-                      transaction.type === 'in' ? 'text-green-600' : 'text-red-600'
-                    ]"
+                    class="text-2xl text-white"
                   ></ion-icon>
                 </div>
                 <div>
@@ -120,9 +118,9 @@
       </div>
 
       <!-- Top Products by Value -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100">
-          <h3 class="text-lg font-semibold text-gray-900">Top Produk (Nilai Stok)</h3>
+      <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-cyan-50 to-blue-50">
+          <h3 class="text-lg font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">Top Produk (Nilai Stok)</h3>
         </div>
         <div class="p-6">
           <div v-if="stats.top_products.length === 0" class="text-center py-8 text-gray-500">
@@ -135,8 +133,8 @@
               class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0"
             >
               <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                  <span class="text-sm font-bold text-indigo-600">{{ index + 1 }}</span>
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                  <span class="text-sm font-bold text-white">{{ index + 1 }}</span>
                 </div>
                 <div>
                   <p class="text-sm font-medium text-gray-900">{{ product.name }}</p>
@@ -144,7 +142,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <p class="text-sm font-bold text-indigo-600">Rp {{ formatPrice(product.stock_value) }}</p>
+                <p class="text-sm font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">Rp {{ formatPrice(product.stock_value) }}</p>
               </div>
             </div>
           </div>
