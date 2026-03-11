@@ -175,7 +175,7 @@ const calculate = async () => {
       break
   }
 
-  let calories = Math.round(weight.value * caloriesPerKg)
+  const calories = Math.round(weight.value * caloriesPerKg)
   let dashTarget = 2000 // DASH standard
   let dashNote = 'Target standar DASH'
   let sodiumLimit = '<2300mg/hari (1 sdt garam)'
@@ -226,18 +226,16 @@ const calculate = async () => {
   // Auto-save
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'Energy Requirement',
-      inputs: {
-        weight: weight.value,
-        activityLevel: activityLevel.value,
-        condition: condition.value
-      },
-      results: {
-        calories: results.value.calories,
-        dashTarget: results.value.dashTarget,
-        sodiumLimit: results.value.sodiumLimit
-      }
+    method: 'Energy Requirement',
+    inputs: {
+      weight: weight.value,
+      activityLevel: activityLevel.value,
+      condition: condition.value
+    },
+    results: {
+      calories: results.value.calories,
+      dashTarget: results.value.dashTarget,
+      sodiumLimit: results.value.sodiumLimit
     }
   })
 }

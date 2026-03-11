@@ -238,17 +238,15 @@ const calculate = async () => {
   // Auto-save
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'BP Classification',
-      inputs: {
-        systolic: systolic.value,
-        diastolic: diastolic.value
-      },
-      results: {
-        category: classification.value.category,
-        action: classification.value.action,
-        dashIndication: classification.value.dashIndication
-      }
+    method: 'BP Classification',
+    inputs: {
+      systolic: systolic.value,
+      diastolic: diastolic.value
+    },
+    results: {
+      category: classification.value.category,
+      action: classification.value.action,
+      dashIndication: classification.value.dashIndication
     }
   })
 }

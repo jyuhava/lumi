@@ -216,8 +216,9 @@ onMounted(async () => {
   // Auto-save when component loads
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'DASH Standard (2300mg Sodium)',
+    method: 'DASH Standard (2300mg Sodium)',
+    inputs: {},
+    results: {
       info: 'Viewed DASH Standard guidelines',
       target: '2000 kcal, <2300mg sodium, 6-8 whole grains, 4-5 veg, 4-5 fruit, 2-3 dairy, ≤6oz meat'
     }

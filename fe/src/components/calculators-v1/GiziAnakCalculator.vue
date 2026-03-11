@@ -1,0 +1,193 @@
+<template>
+  <div class="h-full bg-white">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800">Kebutuhan Gizi Anak Sakit</h2>
+        <p class="text-gray-500 mt-1">Hitung kebutuhan energi anak menggunakan rumus WHO, Schofield, atau A.S.P.E.N.</p>
+      </div>
+      
+      <div class="flex border-b border-gray-100">
+        <button
+          :class="['flex-1 py-3 text-sm font-medium transition-colors', tab === 'who' ? 'bg-emerald-50 text-emerald-700 border-b-2 border-emerald-500' : 'text-gray-500 hover:bg-gray-50']"
+          @click="tab = 'who'"
+        >
+          WHO & Schofield
+        </button>
+        <button
+          :class="['flex-1 py-3 text-sm font-medium transition-colors', tab === 'aspen' ? 'bg-emerald-50 text-emerald-700 border-b-2 border-emerald-500' : 'text-gray-500 hover:bg-gray-50']"
+          @click="tab = 'aspen'"
+        >
+          A.S.P.E.N (Kritis/Bedah)
+        </button>
+      </div>
+
+      <div class="p-6 space-y-5">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+            <select 
+              v-model="gender"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all bg-white"
+            >
+              <option value="l">Laki-laki</option>
+              <option value="p">Perempuan</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Usia (Tahun)</label>
+            <input 
+              type="number" 
+              v-model="usia"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Berat Badan (kg)</label>
+            <input 
+              type="number" 
+              v-model="bb"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tinggi Badan (cm)</label>
+            <input 
+              type="number" 
+              v-model="tb"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+            />
+          </div>
+        </div>
+
+        <div v-if="tab === 'who'" class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Faktor Aktivitas</label>
+            <select 
+              v-model="fa"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all bg-white"
+            >
+              <option :value="1.0">Lumpuh, Tiduran (1.0)</option>
+              <option :value="1.2">Istirahat, Bed Rest (1.1 - 1.2)</option>
+              <option :value="1.3">Tidak bed rest, bisa jalan (1.2 - 1.3)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Faktor Stres</label>
+            <select 
+              v-model="fs"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all bg-white"
+            >
+              <option :value="0.8">Kelaparan (0.7 - 0.9)</option>
+              <option :value="1.3">Bedah (1.2 - 1.5)</option>
+              <option :value="1.4">Sepsis (1.2 - 1.6)</option>
+              <option :value="1.5">Trauma (1.1 - 1.8)</option>
+              <option :value="1.7">Gagal Tumbuh (1.5 - 2.0)</option>
+              <option :value="2.0">Luka Bakar (1.5 - 2.5)</option>
+            </select>
+          </div>
+        </div>
+
+        <div v-if="tab === 'who' && (resWHO !== null || resSchofield !== null)" class="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-100 grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm text-emerald-800 mb-1">Energi (WHO):</p>
+            <div class="text-2xl font-bold text-emerald-600">{{ resWHO ? resWHO.toFixed(0) : '-' }} <span class="text-sm font-medium">kkal</span></div>
+          </div>
+          <div>
+            <p class="text-sm text-emerald-800 mb-1">Energi (Schofield):</p>
+            <div class="text-2xl font-bold text-emerald-600">{{ resSchofield ? resSchofield.toFixed(0) : '-' }} <span class="text-sm font-medium">kkal</span></div>
+          </div>
+        </div>
+
+        <div v-if="tab === 'aspen' && resASPEN !== null" class="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+          <p class="text-sm text-emerald-800 mb-1">Energi Pasca Bedah/Kritis (A.S.P.E.N):</p>
+          <div class="text-3xl font-bold text-emerald-600">{{ resASPEN.toFixed(0) }} <span class="text-lg font-medium">kkal</span></div>
+          <p class="text-xs text-emerald-700 mt-2">
+            Menggunakan rumus Caldwell-Kennedy (&lt;2 th) atau Fleisch (1-19 th).
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+
+const tab = ref<'who' | 'aspen'>('who')
+const gender = ref<'l' | 'p'>('l')
+const bb = ref<number | ''>('')
+const tb = ref<number | ''>('')
+const usia = ref<number | ''>('')
+const fa = ref<number>(1.2)
+const fs = ref<number>(1.0)
+
+const hitungWHO = () => {
+  if (bb.value === '' || usia.value === '') return null;
+  const w = Number(bb.value);
+  const u = Number(usia.value);
+  let bmr = 0;
+
+  if (u <= 3) {
+    bmr = gender.value === 'l' ? (60.9 * w) - 54 : (61 * w) - 51;
+  } else if (u <= 10) {
+    bmr = gender.value === 'l' ? (22.7 * w) + 495 : (22.5 * w) + 499;
+  } else if (u <= 18) {
+    bmr = gender.value === 'l' ? (17.5 * w) + 651 : (12.2 * w) + 746;
+  } else {
+    return null;
+  }
+  return bmr * fa.value * fs.value;
+};
+
+const hitungSchofield = () => {
+  if (bb.value === '' || tb.value === '' || usia.value === '') return null;
+  const w = Number(bb.value);
+  const h = Number(tb.value);
+  const u = Number(usia.value);
+  let bmr = 0;
+
+  if (u <= 3) {
+    bmr = gender.value === 'l' ? (0.17 * w) + (15.17 * h) - 617.6 : (16.25 * w) + (10.232 * h) - 413.5;
+  } else if (u <= 10) {
+    bmr = gender.value === 'l' ? (19.6 * w) + (1.303 * h) + 414.9 : (16.97 * w) + (1.618 * h) + 371.2;
+  } else if (u <= 18) {
+    bmr = gender.value === 'l' ? (16.25 * w) + (1.372 * h) + 515.5 : (8.365 * w) + (4.65 * h) + 200.0;
+  } else {
+    return null;
+  }
+  return bmr * fa.value * fs.value;
+};
+
+const hitungASPEN = () => {
+  if (bb.value === '' || tb.value === '' || usia.value === '') return null;
+  const w = Number(bb.value);
+  const h = Number(tb.value) / 100; // Formula ASPEN TB dalam meter
+  const u = Number(usia.value);
+  
+  // Caldwell-Kennedy (<2 th)
+  if (u < 2) {
+    return 22 + (31.05 * w) + (1.16 * (h * 100)); // TB in cm for Caldwell
+  }
+
+  // Fleisch
+  const lpt = Math.sqrt((w * (h * 100)) / 3600); // LPT formula
+  if (u <= 12) {
+    return gender.value === 'l' 
+      ? 24 * lpt * (54 - (0.885 * u))
+      : 24 * lpt * (54 - (1.045 * u));
+  } else if (u <= 19) {
+    return gender.value === 'l'
+      ? 24 * lpt * (42.5 - (0.643 * (u - 13)))
+      : 24 * lpt * (42.5 - (0.778 * (u - 11)));
+  }
+  return null;
+};
+
+const resWHO = computed(() => hitungWHO())
+const resSchofield = computed(() => hitungSchofield())
+const resASPEN = computed(() => hitungASPEN())
+</script>

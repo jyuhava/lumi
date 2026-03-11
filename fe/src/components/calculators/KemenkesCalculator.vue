@@ -83,7 +83,7 @@ const calculate = async () => {
   }
 
   result.value = {
-    calories: data[ageGroup.value][gender.value],
+    calories: data[ageGroup.value]?.[gender.value as string] || 0,
     group: groupNames[ageGroup.value],
     genderText: gender.value === 'male' ? 'Pria' : 'Wanita'
   }

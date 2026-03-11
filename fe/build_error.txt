@@ -1,0 +1,22 @@
+
+> fe@0.0.0 build-only
+> vite build
+
+vite v7.2.4 building client environment for production...
+transforming...
+✓ 118 modules transformed.
+✗ Build failed in 368ms
+error during build:
+[vite:vue] [plugin vite:vue] src/components/calculators-v1/BBKCalculator.vue (44:49): Error parsing JavaScript expression: Unexpected token, expected "," (1:53)
+file: /Users/wiibs/project/nut/fe/src/components/calculators-v1/BBKCalculator.vue:44:49
+SyntaxError: [plugin vite:vue] src/components/calculators-v1/BBKCalculator.vue (44:49): Error parsing JavaScript expression: Unexpected token, expected "," (1:53)
+    at createCompilerError (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:1360:17)
+    at emitError (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:2963:5)
+    at createExp (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:2956:7)
+    at Object.onattribend (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:2511:29)
+    at Tokenizer.handleInAttrValue (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:945:16)
+    at Tokenizer.stateInAttrValueDoubleQuotes (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:955:10)
+    at Tokenizer.parse (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:1099:16)
+    at Object.baseParse (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-core/dist/compiler-core.cjs.prod.js:2995:13)
+    at Object.parse (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-dom/dist/compiler-dom.cjs.prod.js:665:23)
+    at Object.parse$1 [as parse] (/Users/wiibs/project/nut/fe/node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js:1801:24)

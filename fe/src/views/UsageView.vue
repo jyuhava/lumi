@@ -137,15 +137,15 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span 
-                  v-if="quantities[product.id] > 0"
+                  v-if="(quantities[product.id] || 0) > 0"
                   :class="[
                     'px-3 py-1 text-sm font-bold rounded-full',
-                    (product.stock - quantities[product.id]) > 10 ? 'bg-green-100 text-green-800' : 
-                    (product.stock - quantities[product.id]) > 0 ? 'bg-yellow-100 text-yellow-800' : 
+                    (product.stock - (quantities[product.id] || 0)) > 10 ? 'bg-green-100 text-green-800' : 
+                    (product.stock - (quantities[product.id] || 0)) > 0 ? 'bg-yellow-100 text-yellow-800' : 
                     'bg-red-100 text-red-800'
                   ]"
                 >
-                  {{ product.stock - quantities[product.id] }} {{ product.unit }}
+                  {{ product.stock - (quantities[product.id] || 0) }} {{ product.unit }}
                 </span>
                 <span v-else class="text-gray-400">-</span>
               </td>

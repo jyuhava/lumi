@@ -331,21 +331,19 @@ const calculate = async () => {
   // Auto-save
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'DASH Macronutrient Distribution',
-      inputs: {
-        totalCalories: totalCalories.value,
-        carbPercent: carbPercent.value,
-        proteinPercent: proteinPercent.value,
-        fatPercent: fatPercent.value
-      },
-      results: {
-        carb: `${carbGrams}g (${carbCalories} kkal)`,
-        protein: `${proteinGrams}g (${proteinCalories} kkal)`,
-        fat: `${fatGrams}g (${fatCalories} kkal)`,
-        saturatedFat: `${saturatedFatGrams}g`,
-        fiber: `${fiberGrams}g`
-      }
+    method: 'DASH Macronutrient Distribution',
+    inputs: {
+      totalCalories: totalCalories.value,
+      carbPercent: carbPercent.value,
+      proteinPercent: proteinPercent.value,
+      fatPercent: fatPercent.value
+    },
+    results: {
+      carb: `${carbGrams}g (${carbCalories} kkal)`,
+      protein: `${proteinGrams}g (${proteinCalories} kkal)`,
+      fat: `${fatGrams}g (${fatCalories} kkal)`,
+      saturatedFat: `${saturatedFatGrams}g`,
+      fiber: `${fiberGrams}g`
     }
   })
 }

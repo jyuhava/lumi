@@ -299,8 +299,9 @@ onMounted(async () => {
   // Auto-save when component loads
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'DASH Effectiveness & Monitoring',
+    method: 'DASH Effectiveness & Monitoring',
+    inputs: {},
+    results: {
       info: 'Viewed effectiveness data and monitoring guidelines',
       effectiveness: 'DASH Standard: -6-11 mmHg, DASH Reduced: -8-14 mmHg, DASH+Weight Loss: -11-22 mmHg'
     }

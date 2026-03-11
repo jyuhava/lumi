@@ -229,7 +229,7 @@ const calculate = async () => {
   const normalTemp = 37.5
   const tempRise = Math.max(0, temperature.value - normalTemp)
   
-  const feverAddition = tempRise > 0 ? (basalFluid * (correctionFactor / 100) * tempRise) : 0
+  const feverAddition = tempRise > 0 ? (basalFluid * (correctionFactor.value / 100) * tempRise) : 0
   const totalFluid = basalFluid + feverAddition
   const fluidPerHour = totalFluid / 24
 
@@ -237,8 +237,8 @@ const calculate = async () => {
     `Kebutuhan basal: ${basalFluid.toFixed(0)} mL/hari (${age.value >= 18 ? '30 mL/kg' : 'Holliday-Segar'})`,
     `Suhu tubuh: ${temperature.value}°C`,
     `Kenaikan suhu dari 37,5°C: ${tempRise.toFixed(1)}°C`,
-    `Faktor koreksi: ${correctionFactor}% per 1°C`,
-    `Tambahan cairan = ${basalFluid.toFixed(0)} × ${correctionFactor}% × ${tempRise.toFixed(1)} = ${feverAddition.toFixed(0)} mL`,
+    `Faktor koreksi: ${correctionFactor.value}% per 1°C`,
+    `Tambahan cairan = ${basalFluid.toFixed(0)} × ${correctionFactor.value}% × ${tempRise.toFixed(1)} = ${feverAddition.toFixed(0)} mL`,
     `Total cairan 24 jam = ${basalFluid.toFixed(0)} + ${feverAddition.toFixed(0)} = ${totalFluid.toFixed(0)} mL/hari`,
     `Kecepatan per jam = ${totalFluid.toFixed(0)} ÷ 24 = ${fluidPerHour.toFixed(0)} mL/jam`
   ]

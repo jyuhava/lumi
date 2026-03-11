@@ -1,108 +1,216 @@
 <template>
   <AdminLayout>
-    <!-- Header -->
-    <div class="mb-6">
-      <div class="flex items-center space-x-3 mb-2">
-        <router-link 
-          to="/calculator"
-          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          <ion-icon name="arrow-back" class="text-2xl text-gray-600"></ion-icon>
-        </router-link>
-        <h2 class="text-2xl font-bold text-gray-900">Fluid Calculator</h2>
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+           <router-link to="/calculator" class="text-gray-400 hover:text-[#739b1a] transition-colors">
+              <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+           </router-link>
+           <h2 class="text-3xl font-extrabold text-[#16200B] tracking-tight flex items-center gap-2">
+             <ion-icon name="water" class="text-[#739b1a]"></ion-icon> Fluid Calculator
+           </h2>
+        </div>
+        <p class="text-sm font-medium text-gray-500 mt-2 max-w-xl leading-relaxed ml-9">
+          Perhitungan kebutuhan cairan maintenance dan resusitasi luka bakar.
+        </p>
       </div>
-      <p class="text-gray-600 ml-14">Perhitungan kebutuhan cairan maintenance dan resusitasi luka bakar</p>
-    </div>
-
-    <!-- Calculator Card -->
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <!-- Header -->
-      <div class="bg-gradient-to-r from-cyan-600 to-blue-600 px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <ion-icon name="water" class="text-3xl text-white"></ion-icon>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-white">Fluid Calculator</h3>
-              <p class="text-sm text-cyan-100">Pilih jenis perhitungan kebutuhan cairan</p>
-            </div>
-          </div>
-          <router-link
+      <div>
+         <router-link
             to="/calculator/history?type=fluid"
-            class="px-4 py-2 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg transition-all flex items-center space-x-2"
+            class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50 hover:text-[#739b1a] hover:border-[#739b1a] transition-all shadow-sm flex items-center gap-2 text-sm"
           >
             <ion-icon name="time-outline" class="text-lg"></ion-icon>
-            <span>Riwayat</span>
+            Riwayat
           </router-link>
-        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fade-in-up">
+      <!-- Sidebar / Tabs -->
+      <div class="md:col-span-1 space-y-2">
+        <h3 class="text-lg font-bold text-[#16200B] mb-4 flex items-center gap-2 px-2">
+          <ion-icon name="list-outline" class="text-[#4a6825] text-xl"></ion-icon> Metode
+        </h3>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Cairan Rumatan</p>
+        <button 
+          @click="selectedMethod = 'holliday-segar'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'holliday-segar' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="medical-outline" class="text-lg"></ion-icon>
+          Holliday-Segar
+        </button>
+        <button 
+          @click="selectedMethod = 'quick-ml-kg'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'quick-ml-kg' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="flash-outline" class="text-lg"></ion-icon>
+          Perhitungan Cepat
+        </button>
+        <button 
+          @click="selectedMethod = 'idai-age'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'idai-age' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="calendar-outline" class="text-lg"></ion-icon>
+          Berdasarkan Usia
+        </button>
+        <button 
+          @click="selectedMethod = 'adult-maintenance'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'adult-maintenance' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="body-outline" class="text-lg"></ion-icon>
+          Maintenance Dewasa
+        </button>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Koreksi Sakit</p>
+        <button 
+          @click="selectedMethod = 'fever-correction'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'fever-correction' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="thermometer-outline" class="text-lg"></ion-icon>
+          Koreksi Demam
+        </button>
+        <button 
+          @click="selectedMethod = 'sick-correction'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'sick-correction' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="pulse-outline" class="text-lg"></ion-icon>
+          Koreksi Anak Sakit
+        </button>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Luka Bakar</p>
+        <button 
+          @click="selectedMethod = 'parkland'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'parkland' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="flame-outline" class="text-lg"></ion-icon>
+          Parkland Formula
+        </button>
+        <button 
+          @click="selectedMethod = 'modified-brooke'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'modified-brooke' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="water-outline" class="text-lg"></ion-icon>
+          Modified Brooke
+        </button>
+        <button 
+          @click="selectedMethod = 'cincinnati'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'cincinnati' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="medkit-outline" class="text-lg"></ion-icon>
+          Cincinnati (Anak)
+        </button>
+        <button 
+          @click="selectedMethod = 'galveston'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'galveston' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="analytics-outline" class="text-lg"></ion-icon>
+          Galveston (Anak)
+        </button>
       </div>
 
-      <!-- Body -->
-      <div class="p-6">
-        <!-- Method Selection -->
-        <div class="mb-6">
-          <label class="block text-sm font-bold text-gray-700 mb-3">
-            <ion-icon name="list-outline" class="align-middle mr-1"></ion-icon>
-            Pilih Jenis Perhitungan
-          </label>
-          <select
-            v-model="selectedMethod"
-            class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all bg-white font-medium"
-          >
-            <option value="">-- Pilih Jenis Perhitungan --</option>
-            <optgroup label="Maintenance Fluid (Cairan Rumatan)">
-              <option value="holliday-segar">Holliday-Segar (Standar Emas)</option>
-              <option value="quick-ml-kg">Perhitungan Cepat (mL/kg)</option>
-              <option value="idai-age">Berdasarkan Usia (IDAI)</option>
-              <option value="adult-maintenance">Maintenance Dewasa</option>
-            </optgroup>
-            <optgroup label="Koreksi Kondisi Sakit">
-              <option value="fever-correction">Koreksi Demam</option>
-              <option value="sick-correction">Koreksi Anak Sakit (Diare, Muntah, dll)</option>
-            </optgroup>
-            <optgroup label="Burn Resuscitation (Luka Bakar)">
-              <option value="parkland">Parkland Formula (Gold Standard)</option>
-              <option value="modified-brooke">Modified Brooke Formula</option>
-              <option value="cincinnati">Cincinnati Formula (Anak)</option>
-              <option value="galveston">Galveston Formula (Anak)</option>
-            </optgroup>
-          </select>
-        </div>
-
-        <!-- Calculator Component -->
-        <div v-if="selectedMethod" class="border-t-2 border-gray-200 pt-6">
-          <component :is="calculatorComponents[selectedMethod]" />
-        </div>
-
-        <!-- Empty State -->
-        <div v-else class="text-center py-16">
-          <div class="w-24 h-24 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <ion-icon name="water-outline" class="text-5xl text-cyan-600"></ion-icon>
+      <!-- Main Content / Calculator Component -->
+      <div class="md:col-span-3 bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200">
+        <h3 class="text-lg font-bold text-[#16200B] mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
+          <ion-icon name="calculator" class="text-[#4a6825] text-xl"></ion-icon> Parameter Klinis Pasien
+        </h3>
+        
+        <div class="space-y-5">
+          <!-- Calculator Component -->
+          <div v-if="selectedMethod" class="animate-fade-in-up">
+            <component :is="calculatorComponents[selectedMethod]" />
           </div>
-          <h3 class="text-lg font-bold text-gray-700 mb-2">Pilih Jenis Perhitungan</h3>
-          <p class="text-gray-500">Silakan pilih jenis perhitungan dari dropdown di atas untuk memulai</p>
+
+          <!-- Empty State -->
+          <div v-else class="text-center py-12 bg-gray-50 rounded-xl border border-gray-100 animate-fade-in-up flex flex-col items-center">
+             <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 text-[#739b1a]">
+               <ion-icon name="medical-outline" class="text-3xl"></ion-icon>
+             </div>
+             <p class="text-sm font-bold text-gray-600">Pilih Metode Penilaian</p>
+             <p class="text-xs text-gray-400 mt-1 max-w-xs">Silakan pilih metode penilaian dari menu di samping untuk memulai kalkulasi klinis.</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Information Panel -->
-    <div class="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-xl p-6">
-      <div class="flex items-start space-x-3">
-        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
-          <ion-icon name="information" class="text-2xl text-white"></ion-icon>
-        </div>
-        <div>
-          <h4 class="font-bold text-blue-900 mb-2">Dasar Perhitungan Cairan</h4>
-          <ul class="text-sm text-blue-800 space-y-1">
-            <li>• <strong>Holliday-Segar:</strong> Standar emas maintenance fluid untuk anak sejak 1957</li>
-            <li>• <strong>Parkland Formula:</strong> Gold standard resusitasi luka bakar (4 mL/kg/%TBSA)</li>
-            <li>• <strong>Modified Brooke:</strong> Alternatif konservatif untuk mengurangi over-resuscitation (2 mL/kg/%TBSA)</li>
-            <li>• <strong>Target Urine Output:</strong> 0.5-1 mL/kg/jam (anak), 0.5 mL/kg/jam (dewasa)</li>
-          </ul>
-        </div>
+    <!-- References Section -->
+    <section class="mt-12 pt-8 border-t border-gray-200 mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
+      <h3 class="text-sm font-extrabold text-gray-800 mb-5 flex items-center gap-2">
+        <ion-icon name="book-outline" class="text-[#4a6825] text-lg"></ion-icon> Daftar Pustaka & Informasi Klinis
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-500 font-medium">
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2">
+            <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+            <span><strong>Holliday-Segar:</strong> Standar emas maintenance fluid untuk anak sejak 1957.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+            <span><strong>Target Urine Output:</strong> 0.5-1 mL/kg/jam (anak), 0.5 mL/kg/jam (dewasa).</span>
+          </li>
+        </ul>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2">
+             <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+             <span><strong>Parkland Formula:</strong> Gold standard resusitasi luka bakar (4 mL/kg/%TBSA).</span>
+          </li>
+          <li class="flex items-start gap-2">
+             <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+             <span><strong>Modified Brooke:</strong> Alternatif konservatif untuk mengurangi over-resuscitation (2 mL/kg/%TBSA).</span>
+          </li>
+        </ul>
       </div>
-    </div>
+    </section>
   </AdminLayout>
 </template>
 
@@ -122,6 +230,21 @@ import GalvestonFormula from '@/components/calculators/fluid/GalvestonFormula.vu
 
 const selectedMethod = ref('')
 
+const tabMethods = [
+  { id: 'holliday-segar', label: 'Holliday-Segar (Standar Emas)', group: 'rumatan' },
+  { id: 'quick-ml-kg', label: 'Perhitungan Cepat (mL/kg)', group: 'rumatan' },
+  { id: 'idai-age', label: 'Berdasarkan Usia (IDAI)', group: 'rumatan' },
+  { id: 'adult-maintenance', label: 'Maintenance Dewasa', group: 'rumatan' },
+  
+  { id: 'fever-correction', label: 'Koreksi Demam', group: 'sakit' },
+  { id: 'sick-correction', label: 'Koreksi Anak Sakit', group: 'sakit' },
+  
+  { id: 'parkland', label: 'Parkland Formula', group: 'bakar' },
+  { id: 'modified-brooke', label: 'Modified Brooke', group: 'bakar' },
+  { id: 'cincinnati', label: 'Cincinnati (Anak)', group: 'bakar' },
+  { id: 'galveston', label: 'Galveston (Anak)', group: 'bakar' },
+]
+
 const calculatorComponents: Record<string, any> = {
   'holliday-segar': markRaw(HollidaySegarFluid),
   'quick-ml-kg': markRaw(QuickMLKGFluid),
@@ -135,3 +258,20 @@ const calculatorComponents: Record<string, any> = {
   'galveston': markRaw(GalvestonFormula),
 }
 </script>
+
+<style scoped>
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

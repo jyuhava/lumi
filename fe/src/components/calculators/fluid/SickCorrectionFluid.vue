@@ -279,9 +279,9 @@ const calculate = async () => {
     perioperative: { percent: 12.5, label: 'Perioperatif/Anestesi (rata-rata 10-15%)' }
   }
 
-  if (condition.value && conditionMap[condition.value]) {
-    additionPercent = conditionMap[condition.value].percent
-    conditionLabel = conditionMap[condition.value].label
+  if (condition.value && conditionMap[condition.value as string]) {
+    additionPercent = conditionMap[condition.value as string]?.percent || 0
+    conditionLabel = conditionMap[condition.value as string]?.label || ''
   }
 
   const addition = basalFluid * (additionPercent / 100)

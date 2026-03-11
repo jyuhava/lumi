@@ -13,6 +13,7 @@ class Employee extends Model
         'employee_id',
         'name',
         'position',
+        'preferred_shifts',
         'phone',
         'email',
         'address',
@@ -21,5 +22,6 @@ class Employee extends Model
 
     protected $casts = [
         'status' => 'string',
+        'preferred_shifts' => 'array',
     ];
 }

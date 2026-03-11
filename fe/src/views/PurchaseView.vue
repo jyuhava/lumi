@@ -144,7 +144,8 @@
               </td>
               <td class="px-4 py-3 whitespace-nowrap">
                 <input
-                  v-model.number="itemData[product.id].quantity"
+                  v-if="itemData[product.id]"
+                  v-model.number="itemData[product.id]!.quantity"
                   type="number"
                   min="0"
                   class="w-20 px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -153,7 +154,8 @@
               </td>
               <td class="px-4 py-3 whitespace-nowrap">
                 <input
-                  v-model.number="itemData[product.id].unit_price"
+                  v-if="itemData[product.id]"
+                  v-model.number="itemData[product.id]!.unit_price"
                   type="number"
                   min="0"
                   step="0.01"
@@ -163,7 +165,8 @@
               </td>
               <td class="px-4 py-3 whitespace-nowrap">
                 <input
-                  v-model.number="itemData[product.id].discount_percent"
+                  v-if="itemData[product.id]"
+                  v-model.number="itemData[product.id]!.discount_percent"
                   type="number"
                   min="0"
                   max="100"

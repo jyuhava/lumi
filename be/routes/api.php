@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CalculationHistoryController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\LeaveRequestController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\SettingController;
@@ -46,6 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/schedules/summary', [ScheduleController::class, 'summary']);
     Route::apiResource('schedules', ScheduleController::class);
     
+    // Leave Requests
+    Route::post('/leave-requests/{id}/approve', [LeaveRequestController::class, 'approve']);
+    Route::post('/leave-requests/{id}/reject', [LeaveRequestController::class, 'reject']);
+    Route::apiResource('leave-requests', LeaveRequestController::class);
+    
     // Stock transactions
     Route::get('/stock-summary', [StockTransactionController::class, 'stockSummary']);
     Route::apiResource('stock-transactions', StockTransactionController::class)->only(['index', 'store', 'show']);
@@ -56,4 +62,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/calculation-history/{id}', [CalculationHistoryController::class, 'show']);
     Route::delete('/calculation-history/{id}', [CalculationHistoryController::class, 'destroy']);
     Route::delete('/calculation-history', [CalculationHistoryController::class, 'destroyAll']);
+
+    // Nutritional Visits
+    Route::apiResource('nutritional-visits', \App\Http\Controllers\NutritionalVisitController::class);
+
+    // Diets
+    Route::apiResource('diets', \App\Http\Controllers\DietController::class);
 });

@@ -1,0 +1,49 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run update_view",
+			"type": "shell",
+			"command": "cd fe && python3 update_view.py",
+			"isBackground": false
+		},
+		{
+			"label": "Run update_view with output",
+			"type": "shell",
+			"command": "cd fe && python3 update_view.py > output.txt 2>&1",
+			"isBackground": false
+		},
+		{
+			"label": "build-only frontend",
+			"type": "shell",
+			"command": "cd fe && npm run build-only",
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "build-only frontend redirect",
+			"type": "shell",
+			"command": "cd fe && npm run build-only > build_error.txt 2>&1",
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Run conversion and build",
+			"type": "shell",
+			"command": "python3 fe/convert_pass_2.py && cd fe && npm run build-only",
+			"isBackground": false
+		},
+		{
+			"label": "Run conversion and build log",
+			"type": "shell",
+			"command": "python3 fe/convert_pass_2.py && cd fe && npm run build-only > build_log.txt 2>&1",
+			"isBackground": false
+		}
+	]
+}

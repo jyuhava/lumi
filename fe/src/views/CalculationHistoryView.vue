@@ -132,7 +132,7 @@
           <p class="text-xs font-semibold text-indigo-900 mb-2">Hasil:</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div v-for="(value, key) in getMainResults(item.results)" :key="key" class="bg-white rounded px-3 py-2">
-              <p class="text-xs text-gray-500 capitalize">{{ formatKey(key) }}</p>
+              <p class="text-xs text-gray-500 capitalize">{{ formatKey(String(key)) }}</p>
               <p class="text-sm font-bold text-indigo-600">{{ value }}</p>
             </div>
           </div>

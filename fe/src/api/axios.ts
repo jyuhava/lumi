@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    baseURL: 'https://lumine.syntaf.com/api',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -26,6 +26,17 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error) => {
+        console.group('API Error Details')
+        console.error('URL:', error.config?.url)
+        console.error('Method:', error.config?.method?.toUpperCase())
+        console.error('Status:', error.response?.status)
+        console.error('Data:', error.response?.data)
+
+        if (error.response?.status === 422) {
+            console.error('Validation Errors:', error.response.data.errors)
+        }
+        console.groupEnd()
+
         if (error.response?.status === 401) {
             localStorage.removeItem('token')
             localStorage.removeItem('user')

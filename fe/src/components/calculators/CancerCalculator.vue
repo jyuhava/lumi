@@ -100,7 +100,7 @@ const calculate = async () => {
     transplant: [1.5, 2.0]
   }
 
-  const [pMin, pMax] = proteinMap[proteinLevel.value]
+  const [pMin, pMax] = proteinMap[proteinLevel.value as string] || [1.0, 1.2]
   const proteinMin = weight.value * pMin
   const proteinMax = weight.value * pMax
 

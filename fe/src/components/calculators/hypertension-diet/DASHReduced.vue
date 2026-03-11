@@ -243,8 +243,9 @@ onMounted(async () => {
   // Auto-save when component loads
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'DASH Reduced Sodium (1500mg)',
+    method: 'DASH Reduced Sodium (1500mg)',
+    inputs: {},
+    results: {
       info: 'Viewed DASH Reduced Sodium guidelines',
       target: '<1500mg sodium/day, avoid processed foods, fresh foods priority'
     }

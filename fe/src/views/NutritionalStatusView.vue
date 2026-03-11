@@ -1,98 +1,126 @@
 <template>
   <AdminLayout>
-    <!-- Header -->
-    <div class="mb-6">
-      <div class="flex items-center space-x-3 mb-2">
-        <router-link 
-          to="/calculator"
-          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          <ion-icon name="arrow-back" class="text-2xl text-gray-600"></ion-icon>
-        </router-link>
-        <h2 class="text-2xl font-bold text-gray-900">Status Gizi</h2>
-      </div>
-      <p class="text-gray-600 ml-14">Penilaian status gizi berdasarkan BMI/IMT dan LILA</p>
-    </div>
-
-    <!-- Calculator Card -->
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <!-- Header -->
-      <div class="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-4">
-        <div class="flex items-center space-x-3">
-          <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-            <ion-icon name="body" class="text-3xl text-white"></ion-icon>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-white">Nutritional Status Calculator</h3>
-            <p class="text-sm text-purple-100">Pilih metode penilaian status gizi</p>
-          </div>
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+           <router-link to="/calculator" class="text-gray-400 hover:text-[#739b1a] transition-colors">
+              <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+           </router-link>
+           <h2 class="text-3xl font-extrabold text-[#16200B] tracking-tight flex items-center gap-2">
+             <ion-icon name="body" class="text-[#739b1a]"></ion-icon> Status Gizi
+           </h2>
         </div>
+        <p class="text-sm font-medium text-gray-500 mt-2 max-w-xl leading-relaxed ml-9">
+          Penilaian status gizi berdasarkan BMI/IMT dan LILA standar rekam medis pasien.
+        </p>
       </div>
-
-      <!-- Body -->
-      <div class="p-6">
-        <!-- Action Buttons -->
-        <div class="flex justify-between items-center mb-6">
-          <div class="flex-1">
-            <label class="block text-sm font-bold text-gray-700 mb-3">
-              <ion-icon name="list-outline" class="align-middle mr-1"></ion-icon>
-              Pilih Metode Penilaian
-            </label>
-          </div>
-          <router-link
+      <div>
+         <router-link
             to="/calculator/history?type=nutritional-status"
-            class="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center space-x-2"
+            class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50 hover:text-[#739b1a] hover:border-[#739b1a] transition-all shadow-sm flex items-center gap-2 text-sm"
           >
             <ion-icon name="time-outline" class="text-lg"></ion-icon>
-            <span>Lihat Riwayat</span>
+            Riwayat
           </router-link>
-        </div>
+      </div>
+    </div>
 
-        <!-- Method Selection -->
-        <div class="mb-6">
-          <select
-            v-model="selectedMethod"
-            class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white font-medium"
-          >
-            <option value="">-- Pilih Metode Penilaian --</option>
-            <option value="bmi">BMI/IMT (Body Mass Index)</option>
-            <option value="lila">LILA (Lingkar Lengan Atas)</option>
-            <option value="weight-estimation">Estimasi Berat Badan dari LILA</option>
-          </select>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fade-in-up">
+      <!-- Sidebar / Tabs -->
+      <div class="md:col-span-1 space-y-2">
+        <h3 class="text-lg font-bold text-[#16200B] mb-4 flex items-center gap-2 px-2">
+          <ion-icon name="list-outline" class="text-[#4a6825] text-xl"></ion-icon> Metode
+        </h3>
+        <button 
+          @click="selectedMethod = 'bmi'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'bmi' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="body-outline" class="text-lg"></ion-icon>
+          BMI/IMT
+        </button>
+        <button 
+          @click="selectedMethod = 'lila'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'lila' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="analytics-outline" class="text-lg"></ion-icon>
+          LILA
+        </button>
+        <button 
+          @click="selectedMethod = 'weight-estimation'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'weight-estimation' 
+              ? 'bg-[#739b1a]/10 text-[#739b1a] border-[#739b1a]' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="scale-outline" class="text-lg"></ion-icon>
+          Estimasi BB
+        </button>
+      </div>
 
-        <!-- Calculator Component -->
-        <div v-if="selectedMethod" class="border-t-2 border-gray-200 pt-6">
-          <component :is="calculatorComponents[selectedMethod]" />
-        </div>
-
-        <!-- Empty State -->
-        <div v-else class="text-center py-16">
-          <div class="w-24 h-24 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <ion-icon name="body-outline" class="text-5xl text-purple-600"></ion-icon>
+      <!-- Main Content / Calculator Component -->
+      <div class="md:col-span-3 bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200">
+        <h3 class="text-lg font-bold text-[#16200B] mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
+          <ion-icon name="calculator" class="text-[#4a6825] text-xl"></ion-icon> Parameter Klinis Pasien
+        </h3>
+        
+        <div class="space-y-5">
+          <!-- Calculator Component -->
+          <div v-if="selectedMethod" class="animate-fade-in-up">
+            <component :is="calculatorComponents[selectedMethod]" />
           </div>
-          <h3 class="text-lg font-bold text-gray-700 mb-2">Pilih Metode Penilaian</h3>
-          <p class="text-gray-500">Silakan pilih metode penilaian status gizi dari dropdown di atas</p>
+
+          <!-- Empty State -->
+          <div v-else class="text-center py-12 bg-gray-50 rounded-xl border border-gray-100 animate-fade-in-up flex flex-col items-center">
+             <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 text-[#739b1a]">
+               <ion-icon name="medical-outline" class="text-3xl"></ion-icon>
+             </div>
+             <p class="text-sm font-bold text-gray-600">Pilih Metode Penilaian</p>
+             <p class="text-xs text-gray-400 mt-1 max-w-xs">Silakan pilih metode penilaian dari menu di samping untuk memulai kalkulasi klinis.</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Information Panel -->
-    <div class="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-xl p-6">
-      <div class="flex items-start space-x-3">
-        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
-          <ion-icon name="information" class="text-2xl text-white"></ion-icon>
-        </div>
-        <div>
-          <h4 class="font-bold text-blue-900 mb-2">Informasi Penting</h4>
-          <ul class="text-sm text-blue-800 space-y-1">
-            <li>• <strong>BMI/IMT:</strong> Standar WHO dan Kemenkes RI untuk penilaian status gizi umum</li>
-            <li>• <strong>LILA:</strong> Deteksi risiko KEK (Kekurangan Energi Kronis) terutama untuk WUS dan ibu hamil</li>
-            <li>• <strong>Estimasi BB:</strong> Berguna ketika pengukuran berat badan langsung tidak memungkinkan</li>
-          </ul>
-        </div>
+    <!-- References Section (Replacing Information Panel) -->
+    <section class="mt-12 pt-8 border-t border-gray-200 mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
+      <h3 class="text-sm font-extrabold text-gray-800 mb-5 flex items-center gap-2">
+         <ion-icon name="book-outline" class="text-[#4a6825] text-lg"></ion-icon> Daftar Pustaka & Informasi Klinis
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-500 font-medium">
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2">
+            <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+            <span><strong>BMI/IMT:</strong> Standar WHO dan Kementerian Kesehatan RI untuk penilaian status gizi umum pada dewasa.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+            <span><strong>LILA:</strong> Penapisan risiko KEK (Kekurangan Energi Kronis) dengan ambang batas klinis 23,5 cm.</span>
+          </li>
+        </ul>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2">
+             <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+            <span><strong>Estimasi BB:</strong> Formula validasi pengganti ketika pengukuran berat badan presisi tidak memungkinkan.</span>
+          </li>
+          <li class="flex items-start gap-2">
+             <ion-icon name="medical" class="text-gray-300 shrink-0 mt-0.5"></ion-icon>
+            <span>Rekam Medis: Data yang dimasukkan dapat disimpan ke dalam riwayat penilaian pasien untuk pemantauan berkala.</span>
+          </li>
+        </ul>
       </div>
-    </div>
+    </section>
   </AdminLayout>
 </template>
 
@@ -111,3 +139,20 @@ const calculatorComponents: Record<string, any> = {
   'weight-estimation': markRaw(WeightEstimationCalculator),
 }
 </script>
+
+<style scoped>
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+</style>

@@ -242,13 +242,13 @@ const calculate = async () => {
   const parklandComparison = 4 * weight.value * tbsa.value
 
   // Calculate rates
-  const hoursRemaining8h = Math.max(0, 8 - hoursSinceInjury)
+  const hoursRemaining8h = Math.max(0, 8 - hoursSinceInjury.value)
   const rateFirst8h = hoursRemaining8h > 0 ? first8h / hoursRemaining8h : 0
   const rateNext16h = next16h / 16
 
   // Time calculation
   const injuryTime = new Date()
-  injuryTime.setHours(injuryTime.getHours() - hoursSinceInjury)
+  injuryTime.setHours(injuryTime.getHours() - hoursSinceInjury.value)
   
   const end8h = new Date(injuryTime)
   end8h.setHours(end8h.getHours() + 8)
@@ -260,7 +260,7 @@ const calculate = async () => {
     return date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
   }
 
-  const timeFirst8h = hoursSinceInjury > 0 
+  const timeFirst8h = hoursSinceInjury.value > 0 
     ? `Sisa ${hoursRemaining8h.toFixed(1)} jam`
     : `Jam ke-0 sampai jam ke-8`
   

@@ -45,9 +45,9 @@
       <div class="bg-white p-4 rounded-lg">
         <p class="font-semibold text-gray-800 mb-3">Rumus Curreri:</p>
         <div class="bg-gray-50 p-3 rounded font-mono text-sm mb-3">
-          Energi = (25 × {{ weight.value }}) + (40 × {{ burnPercent.value }}%)
+          Energi = (25 × {{ weight || 0 }}) + (40 × {{ burnPercent || 0 }}%)
         </div>
-        <p class="text-gray-700 text-sm">= {{ (25 * weight.value!).toFixed(0) }} + {{ (40 * burnPercent.value!).toFixed(0) }} = {{ result.energy.toFixed(0) }} kkal/hari</p>
+        <p class="text-gray-700 text-sm">= {{ (25 * (weight || 0)).toFixed(0) }} + {{ (40 * (burnPercent || 0)).toFixed(0) }} = {{ result.energy.toFixed(0) }} kkal/hari</p>
       </div>
 
       <div class="mt-4 bg-white p-4 rounded-lg">

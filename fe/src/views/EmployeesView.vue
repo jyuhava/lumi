@@ -226,6 +226,31 @@
                     ></textarea>
                   </div>
 
+                  <!-- Preferred Shifts -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      Shift Favorit (Opsional)
+                    </label>
+                    <p class="text-xs text-gray-500 mb-3">Pilih shift yang disukai karyawan. Jika tidak dipilih, semua shift tersedia.</p>
+                    <div v-if="shifts.length === 0" class="text-sm text-gray-500 italic">
+                      Memuat shift...
+                    </div>
+                    <div v-else class="space-y-2">
+                      <label v-for="shift in shifts" :key="shift.id" class="flex items-center p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                        <input
+                          type="checkbox"
+                          :value="shift.id"
+                          v-model="form.preferred_shifts"
+                          class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                        >
+                        <span class="ml-3 text-sm">
+                          <span class="font-medium">{{ shift.code }}</span>
+                          <span class="text-gray-500 ml-2">({{ shift.start_time }} - {{ shift.end_time }})</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
                   <div class="flex justify-end space-x-3 pt-4">
                     <button
                       type="button"
@@ -320,13 +345,22 @@ interface Employee {
   employee_id: string
   name: string
   position: string
+  preferred_shifts?: number[]
   phone: string | null
   email: string | null
   address: string | null
   status: 'active' | 'inactive'
 }
 
+interface Shift {
+  id: number
+  code: string
+  start_time: string
+  end_time: string
+}
+
 const employees = ref<Employee[]>([])
+const shifts = ref<Shift[]>([])
 const loading = ref(false)
 const searchQuery = ref('')
 const statusFilter = ref('')
@@ -343,6 +377,7 @@ const form = ref({
   employee_id: '',
   name: '',
   position: '',
+  preferred_shifts: [] as number[],
   phone: '',
   email: '',
   address: '',
@@ -381,12 +416,24 @@ const fetchEmployees = async () => {
   }
 }
 
+const fetchShifts = async () => {
+  try {
+    const response = await api.get('/shifts')
+    if (response.data.success) {
+      shifts.value = response.data.data
+    }
+  } catch (error) {
+    console.error('Error fetching shifts:', error)
+  }
+}
+
 const openCreateModal = () => {
   editingEmployee.value = null
   form.value = {
     employee_id: '',
     name: '',
     position: '',
+    preferred_shifts: [],
     phone: '',
     email: '',
     address: '',
@@ -401,6 +448,7 @@ const openEditModal = (employee: Employee) => {
     employee_id: employee.employee_id,
     name: employee.name,
     position: employee.position,
+    preferred_shifts: employee.preferred_shifts || [],
     phone: employee.phone || '',
     email: employee.email || '',
     address: employee.address || '',
@@ -464,5 +512,6 @@ const deleteEmployee = async () => {
 
 onMounted(() => {
   fetchEmployees()
+  fetchShifts()
 })
 </script>

@@ -138,7 +138,7 @@ const calculate = async () => {
     moderate: 0.20,
     heavy: 0.30
   }
-  basalCalories += basalCalories * activityMap[activity.value]
+  basalCalories += basalCalories * (activityMap[activity.value as string] || 0)
 
   // Koreksi stress metabolik
   let totalCalories = basalCalories

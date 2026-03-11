@@ -400,9 +400,9 @@ const exportToExcel = () => {
   transaction.items?.forEach(item => {
     worksheetData.push([
       item.product?.name || '',
-      item.quantity,
-      item.stock_before,
-      item.stock_after
+      item.quantity.toString(),
+      item.stock_before.toString(),
+      item.stock_after.toString()
     ])
   })
 

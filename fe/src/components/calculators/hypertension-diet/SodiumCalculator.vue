@@ -353,20 +353,18 @@ const calculate = async () => {
   if (totalSodium > 0) {
     await saveCalculation({
       calculator_type: 'hypertension_diet',
-      calculation_data: {
-        method: 'Sodium Calculator',
-        inputs: {
-          processedFood: processedFood.value,
-          fastFood: fastFood.value,
-          processedMeat: processedMeat.value,
-          sauces: sauces.value,
-          snacks: snacks.value,
-          tableSalt: tableSalt.value
-        },
-        results: {
-          totalSodium: results.value.totalSodium,
-          status: results.value.status
-        }
+      method: 'Sodium Calculator',
+      inputs: {
+        processedFood: processedFood.value,
+        fastFood: fastFood.value,
+        processedMeat: processedMeat.value,
+        sauces: sauces.value,
+        snacks: snacks.value,
+        tableSalt: tableSalt.value
+      },
+      results: {
+        totalSodium: results.value.totalSodium,
+        status: results.value.status
       }
     })
   }

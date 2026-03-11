@@ -252,7 +252,7 @@ const calculate = async () => {
   const next16h = total24h / 2
 
   // Calculate rates
-  const hoursRemaining8h = Math.max(0, 8 - hoursSinceInjury)
+  const hoursRemaining8h = Math.max(0, 8 - hoursSinceInjury.value)
   const hoursRemaining16h = 16
 
   const rateFirst8h = hoursRemaining8h > 0 ? first8h / hoursRemaining8h : 0
@@ -260,7 +260,7 @@ const calculate = async () => {
 
   // Time calculation from injury
   const injuryTime = new Date()
-  injuryTime.setHours(injuryTime.getHours() - hoursSinceInjury)
+  injuryTime.setHours(injuryTime.getHours() - hoursSinceInjury.value)
   
   const end8h = new Date(injuryTime)
   end8h.setHours(end8h.getHours() + 8)
@@ -272,7 +272,7 @@ const calculate = async () => {
     return date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
   }
 
-  const timeFirst8h = hoursSinceInjury > 0 
+  const timeFirst8h = hoursSinceInjury.value > 0 
     ? `Sisa ${hoursRemaining8h.toFixed(1)} jam (sampai ${formatTime(end8h)})`
     : `Jam ke-0 sampai jam ke-8 (sampai ${formatTime(end8h)})`
   
@@ -285,8 +285,8 @@ const calculate = async () => {
     `Total 24 jam = 4 × ${weight.value} × ${tbsa.value} = ${total24h.toFixed(0)} mL`,
     `50% pertama (8 jam): ${first8h.toFixed(0)} mL`,
     `50% kedua (16 jam): ${next16h.toFixed(0)} mL`,
-    hoursSinceInjury > 0 
-      ? `Pasien datang ${hoursSinceInjury} jam setelah cedera, sisa waktu 8 jam pertama: ${hoursRemaining8h.toFixed(1)} jam`
+    hoursSinceInjury.value > 0 
+      ? `Pasien datang ${hoursSinceInjury.value} jam setelah cedera, sisa waktu 8 jam pertama: ${hoursRemaining8h.toFixed(1)} jam`
       : 'Mulai segera dari waktu cedera',
     `Kecepatan 8 jam pertama: ${first8h.toFixed(0)} ÷ ${hoursRemaining8h > 0 ? hoursRemaining8h.toFixed(1) : 8} = ${rateFirst8h.toFixed(0)} mL/jam`,
     `Kecepatan 16 jam berikutnya: ${next16h.toFixed(0)} ÷ 16 = ${rateNext16h.toFixed(0)} mL/jam`

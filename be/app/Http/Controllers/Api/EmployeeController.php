@@ -42,17 +42,25 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info('Employee Store Request:', $request->all());
+        
         $validated = $request->validate([
             'employee_id' => 'required|string|unique:employees,employee_id',
             'name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
+            'preferred_shifts' => 'nullable|array',
+            'preferred_shifts.*' => 'exists:shifts,id',
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|unique:employees,email',
             'address' => 'nullable|string',
             'status' => 'required|in:active,inactive',
         ]);
 
+        \Log::info('Validated Data:', $validated);
+
         $employee = Employee::create($validated);
+        
+        \Log::info('Created Employee:', $employee->toArray());
 
         return response()->json([
             'success' => true,
@@ -95,17 +103,25 @@ class EmployeeController extends Controller
             ], 404);
         }
 
+        \Log::info('Employee Update Request for ID ' . $id . ':', $request->all());
+
         $validated = $request->validate([
             'employee_id' => 'required|string|unique:employees,employee_id,' . $id,
             'name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
+            'preferred_shifts' => 'nullable|array',
+            'preferred_shifts.*' => 'exists:shifts,id',
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email|unique:employees,email,' . $id,
             'address' => 'nullable|string',
             'status' => 'required|in:active,inactive',
         ]);
 
+        \Log::info('Validated Data:', $validated);
+
         $employee->update($validated);
+        
+        \Log::info('Updated Employee:', $employee->fresh()->toArray());
 
         return response()->json([
             'success' => true,

@@ -93,9 +93,21 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
+      path: '/leave-requests',
+      name: 'leave-requests',
+      component: () => import('../views/LeaveRequestsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('../views/SettingsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator-v1',
+      name: 'calculator-v1',
+      component: () => import('../views/CalculatorV1View.vue'),
       meta: { requiresAuth: true }
     },
     {
@@ -120,6 +132,12 @@ const router = createRouter({
       path: '/calculator/ibw',
       name: 'calculator-ibw',
       component: () => import('../views/IBWCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/maternal-nutrition',
+      name: 'calculator-maternal-nutrition',
+      component: () => import('../views/MaternalNutritionView.vue'),
       meta: { requiresAuth: true }
     },
     {
@@ -156,6 +174,18 @@ const router = createRouter({
       path: '/calculator/history',
       name: 'calculator-history',
       component: () => import('../views/CalculationHistoryView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/nutritional-visits',
+      name: 'nutritional-visits',
+      component: () => import('../views/NutritionalVisitsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/diets',
+      name: 'diets',
+      component: () => import('../views/DietsView.vue'),
       meta: { requiresAuth: true }
     },
   ],

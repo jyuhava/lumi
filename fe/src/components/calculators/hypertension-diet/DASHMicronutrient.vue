@@ -293,8 +293,9 @@ onMounted(async () => {
   // Auto-save when component loads
   await saveCalculation({
     calculator_type: 'hypertension_diet',
-    calculation_data: {
-      method: 'DASH Micronutrient Guide',
+    method: 'DASH Micronutrient Guide',
+    inputs: {},
+    results: {
       info: 'Viewed micronutrient targets',
       targets: 'K: 3500-4700mg, Ca: 1000-1200mg, Mg: 320-420mg, Fiber: 25-30g, Na: <1500mg'
     }
