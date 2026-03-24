@@ -170,6 +170,14 @@ const calculators = [
     colorClass: 'bg-[#f8faf6] text-[#4a6825] border border-[#bcdd5a]/40'
   },
   {
+    title: 'Bahan Makanan Penukar (DBMP)',
+    description: 'Kalkulator interaktif penukar porsi bahan makanan dengan kesetaraan kalori dan makronutrisi.',
+    path: '/calculator/dbmp',
+    icon: 'restaurant',
+    categoryId: 'nutrition',
+    colorClass: 'bg-yellow-50 text-yellow-600 border border-yellow-100'
+  },
+  {
     title: 'Resusitasi Cairan',
     description: 'Perhitungan empiris kebutuhan cairan pemeliharaan & protokol rehidrasi luka bakar baku.',
     path: '/calculator/fluid',

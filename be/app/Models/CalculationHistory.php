@@ -3,28 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CalculationHistory extends Model
 {
-    protected $table = 'calculation_history';
+    use \App\Traits\Tenantable;
 
     protected $fillable = [
-        'user_id',
-        'calculator_type',
-        'method',
-        'inputs',
-        'results',
-        'notes',
+        'tenant_id',
+        'patient_id',
+        'weight',
+        'height',
+        'age',
+        'gender',
+        'bmr',
+        'tee',
+        'requirements'
     ];
 
     protected $casts = [
-        'inputs' => 'array',
-        'results' => 'array',
+        'requirements' => 'array',
     ];
 
-    public function user(): BelongsTo
+    public function patient()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Patient::class);
     }
 }

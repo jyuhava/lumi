@@ -68,10 +68,30 @@
         </div>
       </div>
 
+      <div class="mt-4 bg-orange-50 border border-orange-200 rounded-lg p-4">
+        <h5 class="text-sm font-bold text-orange-900 flex items-center gap-2 mb-2">
+          <ion-icon name="information-circle"></ion-icon> Versi Depkes (Tanpa Diskon)
+        </h5>
+        
+        <div class="flex items-end justify-between bg-white px-4 py-3 rounded border" :class="result.isSpecialDepkes ? 'border-orange-400 bg-orange-100/30' : 'border-orange-100'">
+          <div>
+            <p class="text-sm text-gray-600">
+              <span v-if="result.isSpecialDepkes" class="font-bold text-red-600 mr-1">Tinggi pasien &lt; {{ gender === 'male' ? '160' : '150' }} cm.</span>
+              Gunakan hasil ini jika mengacu pada mutlak Depkes.
+            </p>
+            <p class="text-xs text-gray-500 mt-1">Hasil ini dihitung <b>tanpa</b> menggunakan pemotongan (diskon {{ gender === 'male' ? '10%' : '15%' }}).</p>
+          </div>
+          <div class="text-right whitespace-nowrap ml-4">
+            <span class="text-2xl font-bold text-orange-700">{{ result.ibwDepkes?.toFixed(1) }}</span><span class="text-gray-500 font-medium ml-1">kg</span>
+          </div>
+        </div>
+      </div>
+
       <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p class="text-sm text-blue-900">
           <strong>Formula:</strong><br>
-          IBW = (Tinggi - 100) × {{ gender === 'male' ? '0.9 (laki-laki)' : '0.85 (perempuan)' }}<br>
+          IBW = (Tinggi - 100) - ((Tinggi - 100) × {{ gender === 'male' ? '10% untuk Pria' : '15% untuk Wanita' }})<br>
+          <i>Khusus Depkes: Pria &lt; 160 cm atau Wanita &lt; 150 cm mutlak pakai (Tinggi - 100)</i><br>
           Rentang Normal = IBW ± 10%
         </p>
       </div>
@@ -103,6 +123,8 @@ const height = ref<number | null>(null)
 const result = ref<{
   ibw: number
   range: { min: number; max: number }
+  isSpecialDepkes?: boolean
+  ibwDepkes?: number
 } | null>(null)
 
 const { saveCalculation } = useCalculationHistory()
@@ -121,6 +143,15 @@ const calculate = async () => {
   // Broca Formula for IBW
   const factor = gender.value === 'male' ? 0.9 : 0.85
   const ibw = (height.value - 100) * factor
+  
+  const ibwDepkes = height.value - 100
+  let isSpecialDepkes = false
+  
+  if (gender.value === 'male' && height.value < 160) {
+    isSpecialDepkes = true
+  } else if (gender.value === 'female' && height.value < 150) {
+    isSpecialDepkes = true
+  }
 
   // Normal range: IBW ± 10%
   const range = {
@@ -128,7 +159,7 @@ const calculate = async () => {
     max: ibw * 1.1
   }
 
-  result.value = { ibw, range }
+  result.value = { ibw, range, isSpecialDepkes, ibwDepkes }
 
   // Save to history
   await saveCalculation({

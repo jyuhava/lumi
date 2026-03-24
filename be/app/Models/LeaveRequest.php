@@ -8,6 +8,8 @@ use Carbon\Carbon;
 
 class LeaveRequest extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'employee_id',
         'start_date',

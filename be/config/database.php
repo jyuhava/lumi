@@ -43,6 +43,13 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        'sqlite_pangan' => [
+            'driver' => 'sqlite',
+            'database' => database_path('pangan.db'),
+            'prefix' => '',
+            'foreign_key_constraints' => false,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),

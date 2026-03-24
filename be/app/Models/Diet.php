@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Diet extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'name',
         'abbreviation',

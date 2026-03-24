@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class NutritionalVisit extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'patient_id',
         'nutritionist_id',

@@ -111,6 +111,37 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
+      path: '/patients',
+      name: 'patients',
+      component: () => import('../views/PatientsView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/patients/:id',
+      name: 'patient-detail',
+      component: () => import('../views/PatientDetailView.vue'),
+      meta: { requiresAuth: true },
+      props: true
+    },
+    {
+      path: '/foods',
+      name: 'food-database',
+      component: () => import('../views/FoodDatabaseExplorerView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/daily-intake',
+      name: 'daily-intake',
+      component: () => import('../views/DailyIntakeView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/planner',
+      name: 'planner',
+      component: () => import('../views/MenuPlannerView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/calculator',
       name: 'calculator',
       component: () => import('../views/CalculatorView.vue'),
@@ -120,6 +151,12 @@ const router = createRouter({
       path: '/calculator/nutrition',
       name: 'calculator-nutrition',
       component: () => import('../views/NutritionCalculatorView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/calculator/dbmp',
+      name: 'calculator-dbmp',
+      component: () => import('../views/DbmpCalculatorView.vue'),
       meta: { requiresAuth: true }
     },
     {
@@ -187,6 +224,12 @@ const router = createRouter({
       name: 'diets',
       component: () => import('../views/DietsView.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/suspended',
+      name: 'suspended',
+      component: () => import('../views/BlockedTenantView.vue'),
+      meta: { requiresGuest: false, requiresAuth: false }
     },
   ],
 })

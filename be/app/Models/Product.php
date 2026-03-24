@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
+    use \App\Traits\Tenantable;
+
     use SoftDeletes;
 
     protected $fillable = [

@@ -177,7 +177,8 @@ const menus = ref([
   {
     title: 'Pelayanan Pasien',
     items: [
-      { path: '/nutritional-visits', label: 'Buku Register', icon: 'document-text-outline' },
+      { path: '/patients', label: 'Data Pasien', icon: 'people-outline' },
+        { path: '/nutritional-visits', label: 'Buku Register', icon: 'document-text-outline' },
       { 
         label: 'Skrining & Edukasi', 
         icon: 'analytics-outline',
@@ -188,6 +189,14 @@ const menus = ref([
           { path: '/calculator/history', label: 'Riwayat Skrining' },
         ]
       }
+    ]
+  },
+  {
+    title: 'Analisis Nutrisi',
+    items: [
+      { path: '/foods', label: 'Database Makanan', icon: 'nutrition-outline' },
+      { path: '/daily-intake', label: 'Food Recall 24h', icon: 'pie-chart-outline' },
+      { path: '/planner', label: 'Menu Planner', icon: 'calendar-outline' }
     ]
   },
   {

@@ -9,16 +9,33 @@ use Illuminate\Http\Request;
 class SettingController extends Controller
 {
     /**
+     * Helper khusus karena tabel Settings memakai key-value
+     */
+    private function getSetting($key, $default = '')
+    {
+        $setting = Setting::where('key', $key)->first();
+        return $setting ? $setting->value : $default;
+    }
+
+    private function setSetting($key, $value)
+    {
+        Setting::updateOrCreate(
+            ['key' => $key], // Kondisi (disertai global scope tenant implicit)
+            ['value' => $value] 
+        );
+    }
+
+    /**
      * Get all institution settings
      */
     public function getInstitution()
     {
         $settings = [
-            'name' => Setting::get('institution_name', ''),
-            'address' => Setting::get('institution_address', ''),
-            'phone' => Setting::get('institution_phone', ''),
-            'email' => Setting::get('institution_email', ''),
-            'logo' => Setting::get('institution_logo', ''),
+            'name' => $this->getSetting('institution_name', ''),
+            'address' => $this->getSetting('institution_address', ''),
+            'phone' => $this->getSetting('institution_phone', ''),
+            'email' => $this->getSetting('institution_email', ''),
+            'logo' => $this->getSetting('institution_logo', ''),
         ];
 
         return response()->json([
@@ -40,11 +57,11 @@ class SettingController extends Controller
             'logo' => 'nullable|string',
         ]);
 
-        Setting::set('institution_name', $validated['name']);
-        Setting::set('institution_address', $validated['address'] ?? '');
-        Setting::set('institution_phone', $validated['phone'] ?? '');
-        Setting::set('institution_email', $validated['email'] ?? '');
-        Setting::set('institution_logo', $validated['logo'] ?? '');
+        $this->setSetting('institution_name', $validated['name']);
+        $this->setSetting('institution_address', $validated['address'] ?? '');
+        $this->setSetting('institution_phone', $validated['phone'] ?? '');
+        $this->setSetting('institution_email', $validated['email'] ?? '');
+        $this->setSetting('institution_logo', $validated['logo'] ?? '');
 
         return response()->json([
             'success' => true,

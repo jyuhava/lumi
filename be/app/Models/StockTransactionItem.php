@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StockTransactionItem extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'stock_transaction_id',
         'product_id',

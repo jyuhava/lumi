@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'no_rm',
         'name',
@@ -16,5 +18,10 @@ class Patient extends Model
     public function nutritionalVisits()
     {
         return $this->hasMany(NutritionalVisit::class);
+    }
+
+    public function meals()
+    {
+        return $this->hasMany(Meal::class);
     }
 }

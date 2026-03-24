@@ -244,7 +244,6 @@
         </p>
       </div>
     </div>
-
   </AdminLayout>
 </template>
 

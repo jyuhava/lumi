@@ -8,6 +8,8 @@ use Carbon\Carbon;
 
 class Schedule extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'employee_id',
         'shift_id',

@@ -15,17 +15,39 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        logger('Login Request: ', $request->all());
+
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $user = User::where('username', $request->username)->first();
+        // Karena Frontend tidak pakai subdomain, user bisa dari rumah sakit mana saja.
+        // Maka kita matikan fungsi filter Isolasi (Global Scope) HANYA untuk proses pencarian user saat Login.
+        $user = User::withoutGlobalScopes()->with('tenant')->where('username', $request->username)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        logger('Found User: ', ['user' => $user]);
+
+        if (!$user) {
+            logger('User Not Found');
             throw ValidationException::withMessages([
-                'username' => ['The provided credentials are incorrect.'],
+                'username' => ['The provided credentials are incorrect. (User Not Found)'],
             ]);
+        }
+
+        if (!Hash::check($request->password, $user->password)) {
+            logger('Hash Check Failed');
+            throw ValidationException::withMessages([
+                'username' => ['The provided credentials are incorrect. (Password Mismatch)'],
+            ]);
+        }
+
+        // Cek apakah Tenant (Rumah Sakit) user ini sedang diblokir?
+        if ($user->tenant && $user->tenant->status !== 'active') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Akses ditolak: Akun instansi Anda sedang berstatus suspend/menunggu pembayaran.'
+            ], 403);
         }
 
         $token = $user->createToken('auth-token')->plainTextToken;
@@ -39,6 +61,8 @@ class AuthController extends Controller
                     'name' => $user->name,
                     'username' => $user->username,
                     'email' => $user->email,
+                    'tenant_id' => $user->tenant_id,
+                    'tenant_subdomain' => $user->tenant->subdomain ?? null
                 ],
                 'token' => $token,
             ],

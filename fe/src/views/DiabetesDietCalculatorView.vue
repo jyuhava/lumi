@@ -1,100 +1,173 @@
 <template>
   <AdminLayout>
-    <!-- Header -->
-    <div class="mb-6">
-      <div class="flex items-center space-x-3 mb-2">
-        <router-link 
-          to="/calculator"
-          class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          <ion-icon name="arrow-back" class="text-2xl text-gray-600"></ion-icon>
-        </router-link>
-        <h2 class="text-2xl font-bold text-gray-900">Diabetes Diet Calculator</h2>
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+           <router-link to="/calculator" class="text-gray-400 hover:text-blue-600 transition-colors">
+              <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+           </router-link>
+           <h2 class="text-3xl font-extrabold text-[#16200B] tracking-tight flex items-center gap-2">
+             <ion-icon name="pulse" class="text-blue-600"></ion-icon> Diabetes Diet Calculator
+           </h2>
+        </div>
+        <p class="text-sm font-medium text-gray-500 mt-2 max-w-xl leading-relaxed ml-9">
+          Perhitungan diet Diabetes Melitus Tipe 2 - Standar PERKENI 2024 & Kemenkes RI
+        </p>
       </div>
-      <p class="text-gray-600 ml-14">Perhitungan diet Diabetes Melitus Tipe 2 - Standar PERKENI 2024 & Kemenkes RI</p>
+      <div>
+         <router-link
+            to="/calculator/history?type=diabetes_diet"
+            class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50 hover:text-blue-600 hover:border-blue-600 transition-all shadow-sm flex items-center gap-2 text-sm"
+          >
+            <ion-icon name="time-outline" class="text-lg"></ion-icon>
+            Riwayat
+          </router-link>
+      </div>
     </div>
 
-    <!-- Calculator Card -->
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <!-- Header -->
-      <div class="bg-gradient-to-r from-red-600 to-orange-600 px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <ion-icon name="pulse" class="text-3xl text-white"></ion-icon>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-white">Diabetes Diet Calculator</h3>
-              <p class="text-sm text-orange-100">Pilih metode perhitungan diet DM</p>
-            </div>
-          </div>
+    <!-- Info Box -->
+    <div class="bg-blue-50/50 rounded-2xl px-6 py-4 border border-blue-100 mb-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="p-3 bg-white rounded-xl shadow-sm border border-blue-50">
+          <ion-icon name="calculator" class="text-2xl text-blue-500 mb-1"></ion-icon>
+          <p class="text-xs font-bold text-gray-700">Kalori & Makro</p>
         </div>
-      </div>
-
-      <!-- Info Box -->
-      <div class="bg-gradient-to-r from-red-50 to-orange-50 px-6 py-4 border-b border-red-200">
-        <div class="grid md:grid-cols-4 gap-4 text-center">
-          <div>
-            <ion-icon name="calculator" class="text-2xl text-red-600 mb-1"></ion-icon>
-            <p class="text-xs font-bold text-gray-700">Kalori & Makronutrien</p>
-          </div>
-          <div>
-            <ion-icon name="restaurant" class="text-2xl text-orange-600 mb-1"></ion-icon>
-            <p class="text-xs font-bold text-gray-700">Sistem Penukar</p>
-          </div>
-          <div>
-            <ion-icon name="time" class="text-2xl text-red-600 mb-1"></ion-icon>
-            <p class="text-xs font-bold text-gray-700">Pola 3J</p>
-          </div>
-          <div>
-            <ion-icon name="analytics" class="text-2xl text-orange-600 mb-1"></ion-icon>
-            <p class="text-xs font-bold text-gray-700">Monitoring</p>
-          </div>
+        <div class="p-3 bg-white rounded-xl shadow-sm border border-blue-50">
+          <ion-icon name="restaurant" class="text-2xl text-blue-500 mb-1"></ion-icon>
+          <p class="text-xs font-bold text-gray-700">Sistem Penukar</p>
         </div>
-      </div>
-
-      <!-- Method Selection -->
-      <div class="p-6">
-        <label class="block text-sm font-bold text-gray-700 mb-3">Pilih Metode Perhitungan:</label>
-        <select
-          v-model="selectedMethod"
-          class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 text-gray-900 font-medium"
-        >
-          <option value="">-- Pilih Metode --</option>
-          
-          <optgroup label="Perhitungan Kebutuhan Energi">
-            <option value="rule-of-thumb">Rule of Thumb (PERKENI 2024)</option>
-            <option value="harris-benedict">Harris-Benedict (Presisi Tinggi)</option>
-          </optgroup>
-
-          <optgroup label="Distribusi Makronutrien">
-            <option value="macronutrient-distribution">Distribusi Makronutrien PERKENI</option>
-            <option value="food-exchange">Sistem Penukar Makanan (DBMP)</option>
-          </optgroup>
-
-          <optgroup label="Perencanaan Menu">
-            <option value="meal-pattern-3j">Pola Makan 3J (Jumlah, Jadwal, Jenis)</option>
-            <option value="glycemic-index">Indeks Glikemik Makanan</option>
-          </optgroup>
-
-          <optgroup label="Standar Diet">
-            <option value="standard-dm-diet">Standar Diet DM I-VIII</option>
-          </optgroup>
-        </select>
-
-        <!-- Dynamic Component -->
-        <div v-if="currentComponent" class="mt-6">
-          <component :is="currentComponent" />
+        <div class="p-3 bg-white rounded-xl shadow-sm border border-blue-50">
+          <ion-icon name="time" class="text-2xl text-blue-500 mb-1"></ion-icon>
+          <p class="text-xs font-bold text-gray-700">Pola 3J</p>
         </div>
-
-        <!-- Empty State -->
-        <div v-else class="mt-8 text-center py-12 bg-gray-50 rounded-xl">
-          <ion-icon name="document-text" class="text-6xl text-gray-400 mb-3"></ion-icon>
-          <p class="text-gray-600 font-medium">Pilih metode perhitungan untuk memulai</p>
-          <p class="text-sm text-gray-500 mt-1">Pilihan tersedia berdasarkan PERKENI 2024 & Kemenkes RI</p>
+        <div class="p-3 bg-white rounded-xl shadow-sm border border-blue-50">
+          <ion-icon name="analytics" class="text-2xl text-blue-500 mb-1"></ion-icon>
+          <p class="text-xs font-bold text-gray-700">Monitoring</p>
         </div>
       </div>
     </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fade-in-up">
+      <!-- Sidebar / Tabs -->
+      <div class="md:col-span-1 space-y-2">
+        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 px-2">
+          <ion-icon name="list-outline" class="text-blue-500 text-xl"></ion-icon> Metode
+        </h3>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Kebutuhan Energi</p>
+        <button 
+          @click="selectedMethod = 'rule-of-thumb'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'rule-of-thumb' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="flash-outline" class="text-lg"></ion-icon>
+          PERKENI 2024
+        </button>
+        <button 
+          @click="selectedMethod = 'harris-benedict'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'harris-benedict' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="flask-outline" class="text-lg"></ion-icon>
+          Harris-Benedict
+        </button>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Makronutrien</p>
+        <button 
+          @click="selectedMethod = 'macronutrient-distribution'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'macronutrient-distribution' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="pie-chart-outline" class="text-lg"></ion-icon>
+          Distribusi
+        </button>
+        <button 
+          @click="selectedMethod = 'food-exchange'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'food-exchange' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="cart-outline" class="text-lg"></ion-icon>
+          Sistem Penukar
+        </button>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Perencanaan Menu</p>
+        <button 
+          @click="selectedMethod = 'meal-pattern-3j'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'meal-pattern-3j' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="restaurant-outline" class="text-lg"></ion-icon>
+          Pola Makan 3J
+        </button>
+        <button 
+          @click="selectedMethod = 'glycemic-index'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'glycemic-index' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="trending-up-outline" class="text-lg"></ion-icon>
+          Indeks Glikemik
+        </button>
+
+        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4 mb-2 px-2">Standar Diet</p>
+        <button 
+          @click="selectedMethod = 'standard-dm-diet'"
+          :class="[
+            'w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 border',
+            selectedMethod === 'standard-dm-diet' 
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' 
+              : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+          ]"
+        >
+          <ion-icon name="document-text-outline" class="text-lg"></ion-icon>
+          Diet DM I-VIII
+        </button>
+      </div>
+
+      <!-- Main Content / Calculator Component -->
+      <div class="md:col-span-3 bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 min-h-[500px]">
+        
+        <div class="space-y-5">
+          <!-- Calculator Component -->
+          <div v-if="selectedMethod" class="animate-fade-in-up">
+            <component :is="calculatorComponents[selectedMethod]" />
+          </div>
+
+          <!-- Empty State -->
+          <div v-else class="text-center py-16 bg-slate-50 rounded-xl border border-slate-100 animate-fade-in-up flex flex-col items-center">
+             <div class="w-20 h-20 bg-white shadow-sm border border-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-500">
+               <ion-icon name="medical" class="text-4xl"></ion-icon>
+             </div>
+             <p class="text-lg font-bold text-slate-800">Pilih Metode Perhitungan</p>
+             <p class="text-sm text-slate-500 mt-2 max-w-sm">Silakan pilih metode penilaian dari menu di samping untuk memulai kalkulasi diet diabetes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </AdminLayout>
 </template>
 
@@ -117,7 +190,7 @@ import GlycemicIndex from '@/components/calculators/diabetes-diet/GlycemicIndex.
 // Standard Diet Component
 import StandardDMDiet from '@/components/calculators/diabetes-diet/StandardDMDiet.vue'
 
-const selectedMethod = ref('')
+const selectedMethod = ref('rule-of-thumb')
 
 const calculatorComponents: Record<string, any> = {
   'rule-of-thumb': markRaw(RuleOfThumb),
@@ -128,8 +201,21 @@ const calculatorComponents: Record<string, any> = {
   'glycemic-index': markRaw(GlycemicIndex),
   'standard-dm-diet': markRaw(StandardDMDiet),
 }
-
-const currentComponent = computed(() => {
-  return selectedMethod.value ? calculatorComponents[selectedMethod.value] : null
-})
 </script>
+
+<style scoped>
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+</style>

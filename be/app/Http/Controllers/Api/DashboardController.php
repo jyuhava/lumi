@@ -32,11 +32,14 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
         
+        $isSqlite = DB::connection()->getDriverName() === 'sqlite';
+        $dateFormat = $isSqlite ? "strftime('%Y-%m', transaction_date)" : "DATE_FORMAT(transaction_date, '%Y-%m')";
+
         // Get monthly purchase stats (last 6 months)
         $monthlyPurchases = StockTransaction::where('type', 'in')
             ->where('transaction_date', '>=', now()->subMonths(6))
             ->select(
-                DB::raw('DATE_FORMAT(transaction_date, "%Y-%m") as month'),
+                DB::raw("$dateFormat as month"),
                 DB::raw('COUNT(*) as count'),
                 DB::raw('SUM(total_amount) as total')
             )
@@ -48,7 +51,7 @@ class DashboardController extends Controller
         $monthlyUsage = StockTransaction::where('type', 'out')
             ->where('transaction_date', '>=', now()->subMonths(6))
             ->select(
-                DB::raw('DATE_FORMAT(transaction_date, "%Y-%m") as month'),
+                DB::raw("$dateFormat as month"),
                 DB::raw('COUNT(*) as count')
             )
             ->groupBy('month')

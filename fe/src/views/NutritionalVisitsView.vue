@@ -185,9 +185,23 @@
                                 <label class="block text-xs font-bold text-gray-700 mb-1.5">No. RM *</label>
                                 <input v-model="form.no_rm" type="text" required class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#739b1a] font-mono font-bold" />
                             </div>
-                            <div class="md:col-span-2">
+                            <div class="md:col-span-2 relative">
                                 <label class="block text-xs font-bold text-gray-700 mb-1.5">Nama Pasien *</label>
-                                <input v-model="form.name" type="text" required class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#739b1a]" />
+                                <input v-model="form.name" type="text" required 
+                                  @focus="onPatientNameInput" 
+                                  @blur="hidePatientDropdown"
+                                  @input="onPatientNameInput"
+                                  autocomplete="off"
+                                  class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#739b1a]" />
+                                
+                                <div v-if="showPatientDropdown && patientsList.length > 0" class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                    <div v-for="p in patientsList" :key="p.id" 
+                                         @mousedown.prevent="selectPatient(p)" 
+                                         class="px-4 py-2 hover:bg-[#739b1a]/10 cursor-pointer text-sm border-b border-gray-50 last:border-0 transition-colors">
+                                        <div class="font-bold text-gray-800">{{ p.name }}</div>
+                                        <div class="text-xs text-gray-500">RM: <span class="font-mono text-[#739b1a]">{{ p.no_rm }}</span> <span v-if="p.age">• Usia: {{ p.age }} thn</span></div>
+                                    </div>
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 mb-1.5">Usia (Thn)</label>
@@ -323,6 +337,8 @@ import api from '@/api/axios'
 
 const visits = ref<any[]>([])
 const dietsList = ref<any[]>([])
+const patientsList = ref<any[]>([])
+const showPatientDropdown = ref(false)
 const loading = ref(false)
 const filterMonth = ref<string>('')
 const searchQuery = ref('')
@@ -371,6 +387,33 @@ const filteredVisits = computed(() => {
 })
 
 // Methods
+let searchTimeout: any
+const onPatientNameInput = () => {
+    clearTimeout(searchTimeout)
+    searchTimeout = setTimeout(async () => {
+        try {
+            const { data } = await api.get('/patients', { params: { search: form.value.name, paginate: false } })
+            patientsList.value = Array.isArray(data) ? data : (data.data || [])
+            showPatientDropdown.value = true
+        } catch (error) {
+            console.error('Failed to search patients', error)
+        }
+    }, 300)
+}
+
+const selectPatient = (p: any) => {
+    form.value.name = p.name
+    form.value.no_rm = p.no_rm
+    if (p.age) form.value.age = p.age
+    showPatientDropdown.value = false
+}
+
+const hidePatientDropdown = () => {
+    setTimeout(() => {
+        showPatientDropdown.value = false
+    }, 200)
+}
+
 const toggleDiet = (diet: any) => {
     const dietVal = diet.abbreviation || diet.name
     const index = form.value.diet_prescription.indexOf(dietVal)

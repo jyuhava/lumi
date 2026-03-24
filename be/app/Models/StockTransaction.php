@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StockTransaction extends Model
 {
+    use \App\Traits\Tenantable;
+
     protected $fillable = [
         'transaction_number',
         'type',

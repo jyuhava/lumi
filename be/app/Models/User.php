@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    use \App\Traits\Tenantable;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'tenant_id',
     ];
 
     /**
@@ -46,5 +49,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class, 'tenant_id');
     }
 }
